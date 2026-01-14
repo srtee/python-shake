@@ -298,7 +298,7 @@ def noniter_3p2c(cons):
     #cminus = 2*delta*Delta/sintheta
     j00 = jcmat[0, 0]
     j01 = jcmat[0, 1]
-    (dprime1, jprime10, jprime11) = (np.array([d1, jcmat[1, 0], jcmat[1, 1]]) - cminus*np.array([d0, jcmat[0, 0], jcmat[0, 1]]))/eigc2
+    (dprime1, jprime10, jprime11) = (np.array([d1, jcmat[1, 0], jcmat[1, 1]]) - eigc2*np.array([d0, jcmat[0, 0], jcmat[0, 1]]))/cminus
     R2 = jcmat[0, 0]*jcmat[0, 0] + jcmat[0,1]*jcmat[0,1] - d0
     D = jprime10*jprime10 - jprime11*jprime11 - dprime1
     A = (jprime10-j00)/jprime11
@@ -371,8 +371,8 @@ def noniter_3p2c_gamma(cons, guess=None, threshold=1e-6):
       #guess = guess
       if deriv != 0.0:
         guess = guess - quartic(guess)/deriv
-    
-    roots = root(quartic, guess, jac = derivative_of_quartic)
+    j00 = jcmat[0][0]
+    roots = root(quartic, -j00, jac = derivative_of_quartic)
     X = roots.x[0]
     Yval = Y(X)
     j00 = jcmat[0][0]
